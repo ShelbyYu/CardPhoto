@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color">
+
+        <RelativeLayout
+            android:id="@+id/threefragment_cardphotoview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@color/white">
+            <com.xueyu.component.CircleImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@mipmap/icon_template"
+                android:id="@+id/threefragment_imageview" />
+            <TextView
+                android:id="@+id/threefragment_font_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请添加文字"
+                android:textColor="@color/font_color"
+                android:textSize="@dimen/font_size"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_alignParentBottom="false" />
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

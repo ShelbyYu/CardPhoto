@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="H:\Android Studio Project\CardPhoto\MaterialDialogLibrary\assets"><file name="Roboto-Medium.ttf" path="H:\Android Studio Project\CardPhoto\MaterialDialogLibrary\assets\Roboto-Medium.ttf"/><file name="Roboto-Regular.ttf" path="H:\Android Studio Project\CardPhoto\MaterialDialogLibrary\assets\Roboto-Regular.ttf"/></source></dataSet><dataSet config="release"><source path="H:\Android Studio Project\CardPhoto\MaterialDialogLibrary\build-types\release\assets"/></dataSet></merger>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="indicator_colors">
+        <item>@color/indicator_1</item>
+        <item>@color/indicator_2</item>
+        <item>@color/indicator_3</item>
+    </array>
+
+    <string-array name="photo">
+        <item>拍照</item>
+        <item>相册</item>
+        <item>取消</item>
+    </string-array>
+
+    <string-array name="fontstyle">
+        <item>默认系统</item>
+        <item>华康娃娃体</item>
+        <item>方正胖头鱼体</item>
+        <item>华文新魏</item>
+        <item>方正硬笔行书</item>
+    </string-array>
+    <string-array name="fontsize">
+        <item>默认:15</item>
+        <item>10</item>
+        <item>13</item>
+        <item>18</item>
+        <item>22</item>
+    </string-array>
+</resources>

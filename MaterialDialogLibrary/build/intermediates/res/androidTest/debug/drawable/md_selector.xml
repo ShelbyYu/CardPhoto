@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:exitFadeDuration="@android:integer/config_shortAnimTime">
+
+    <item android:state_pressed="true" android:drawable="@drawable/md_item_selected" />
+    <item android:drawable="@drawable/md_transparent" />
+
+</selector><!-- From: file:/H:/Android%20Studio%20Project/CardPhoto/MaterialDialogLibrary/res/drawable/md_selector.xml --><!-- From: file:/H:/Android%20Studio%20Project/CardPhoto/MaterialDialogLibrary/build/intermediates/bundles/debug/res/drawable/md_selector.xml -->

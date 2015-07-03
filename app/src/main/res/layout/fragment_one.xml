@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@color/white"
+        android:id="@+id/onefragment_scrollView" >
+
+        <LinearLayout
+            android:id="@+id/onefragment_photoview"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            <com.xueyu.component.SquareImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:scaleType="centerInside"
+                android:background="@mipmap/icon_template"
+                android:id="@+id/onefragment_imageview" />
+            <TextView
+                android:id="@+id/onefragment_font_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请添加文字"
+                android:textColor="@color/font_color"
+                android:textSize="@dimen/font_size"
+                android:layout_marginLeft="15dp"/>
+            <TextView
+                android:id="@+id/onefragment_font_autor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="－－署名"
+                android:textColor="@color/font_color"
+                android:textSize="@dimen/font_size"
+                android:layout_gravity="end"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
