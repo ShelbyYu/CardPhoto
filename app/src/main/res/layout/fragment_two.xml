@@ -20,19 +20,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25dp"
+                android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
                 android:src="@mipmap/icon_template"
                 android:id="@+id/twofragment_imageview" />
-            <TextView
-                android:id="@+id/twofragment_font_content"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/onefragment_photoview"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="请添加文字"
-                android:textColor="@color/font_color"
-                android:textSize="@dimen/font_size"
-                android:layout_gravity="center"
-                android:layout_marginBottom="15dp"
-                android:gravity="center"/>
+                android:layout_marginTop="-10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+                <TextView
+                    android:id="@+id/twofragment_font_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请添加文字"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="@color/font_color"
+                    android:textSize="@dimen/font_size"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="7dp"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/twofragment_font_autor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="－－署名"
+                    android:textColor="@color/font_color"
+                    android:textSize="@dimen/font_size"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="15dp"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

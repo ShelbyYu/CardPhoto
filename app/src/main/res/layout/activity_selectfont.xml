@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@color/main_color"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,59 +21,66 @@
             android:textSize="18sp" />
     </RelativeLayout>
     <LinearLayout
-        style="@style/selectfont_linearlayou">
-        <TextView
-            style="@style/selectfont_font"
-            android:text="字体样式："/>
-        <com.xueyu.component.MaterialEditText
-            android:id="@+id/selectfont_style"
-            style="@style/selectfont_edittext"
-            app:baseColor="@color/font_color"
-            android:textCursorDrawable="@null"
-            app:primaryColor="@color/font_color"
-             />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/selectfont_linearlayou">
-        <TextView
-            style="@style/selectfont_font"
-            android:text="字体大小："/>
-        <com.xueyu.component.MaterialEditText
-            android:id="@+id/selectfont_size"
-            style="@style/selectfont_edittext"
-            app:baseColor="@color/font_color"
-            android:textCursorDrawable="@null"
-            app:primaryColor="@color/font_color"
-            />
-
-    </LinearLayout>
-    <LinearLayout
-        style="@style/selectfont_linearlayou">
-        <TextView
-            style="@style/selectfont_font"
-            android:text="字体颜色："/>
-        <View
-            android:id="@+id/selectfont_color"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:background="@color/main_color">
-        </View>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="40dp">
-        <Button
-            android:id="@+id/selectfont_cancel"
-            style="@style/selectfont_button"
-            android:text="取消"/>
-        <Button
-            android:id="@+id/selectfont_sure"
-            style="@style/selectfont_button"
-            android:text="确定"/>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <LinearLayout
+            style="@style/selectfont_linearlayou"
+            android:focusableInTouchMode="true">
+            <TextView
+                style="@style/selectfont_font"
+                android:text="字体样式："/>
+            <com.xueyu.component.MaterialEditText
+                android:id="@+id/selectfont_style"
+                style="@style/selectfont_edittext"
+                app:baseColor="@color/font_color"
+                android:textCursorDrawable="@null"
+                app:primaryColor="@color/font_color"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:focusableInTouchMode="true"
+            style="@style/selectfont_linearlayou">
+            <TextView
+                style="@style/selectfont_font"
+                android:text="字体大小："/>
+            <com.xueyu.component.MaterialEditText
+                android:id="@+id/selectfont_size"
+                style="@style/selectfont_edittext"
+                app:baseColor="@color/font_color"
+                android:textCursorDrawable="@null"
+                app:primaryColor="@color/font_color"
+                />
 
+        </LinearLayout>
+        <LinearLayout
+            style="@style/selectfont_linearlayou">
+            <TextView
+                style="@style/selectfont_font"
+                android:text="字体颜色："/>
+            <View
+                android:id="@+id/selectfont_color"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/main_color">
+            </View>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp">
+            <Button
+                android:id="@+id/selectfont_cancel"
+                style="@style/selectfont_button"
+                android:text="取消"/>
+            <Button
+                android:id="@+id/selectfont_sure"
+                style="@style/selectfont_button"
+                android:text="确定"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

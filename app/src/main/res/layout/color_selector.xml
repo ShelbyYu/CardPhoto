@@ -16,7 +16,7 @@
         <View
             android:id="@+id/viewColor"
             android:layout_width="fill_parent"
-            android:layout_height="10dp" />
+            android:layout_height="100dp" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -98,6 +98,19 @@
                     materialdesign:min="0"
                     materialdesign:showNumberIndicator="true" />
             </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+            <Button
+                android:id="@+id/colorDialog_cancel"
+                style="@style/selectfont_button"
+                android:text="取消"/>
+            <Button
+                android:id="@+id/colorDialog_sure"
+                style="@style/selectfont_button"
+                android:text="确定"/>
         </LinearLayout>
     </LinearLayout>
 

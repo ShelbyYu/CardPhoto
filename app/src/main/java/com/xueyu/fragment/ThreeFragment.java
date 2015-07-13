@@ -15,10 +15,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.xueyu.base.BaseFragment;
 import com.xueyu.bean.FontBean;
+import com.xueyu.bean.TextBean;
 import com.xueyu.cardphoto.R;
 import com.xueyu.component.CircleImageView;
+import com.xueyu.component.SquareImageView;
 
 /**
  * Created by Shey on 2015/7/2 15:05.
@@ -26,8 +30,8 @@ import com.xueyu.component.CircleImageView;
  */
 public class ThreeFragment extends BaseFragment implements View.OnClickListener{
 
-    private CircleImageView circleImageView;
-    private TextView content;
+    private SquareImageView squareImageView;
+    private TextView content,author;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +39,19 @@ public class ThreeFragment extends BaseFragment implements View.OnClickListener{
     }
     /**
      * 设置选中的图片
-     * @param photo
+     * @param photoUrl
      */
     @Override
-    protected void setPhotoBackground(Bitmap photo) {
-        Drawable drawable =new BitmapDrawable(photo);
-        circleImageView.setBackgroundDrawable(drawable);
-        drawable=null;
-        System.gc();
+    protected void setPhotoBackground(String  photoUrl) {
+//        Drawable drawable =new BitmapDrawable(photo);
+//        squareImageView.setBackgroundDrawable(drawable);
+//        drawable=null;
+
+        if(!photoUrl.contains("http://")){
+            photoUrl = ImageDownloader.Scheme.FILE.wrap(photoUrl);
+        }
+
+        ImageLoader.getInstance().displayImage(photoUrl, squareImageView);
     }
     /**
      * 设置字体
@@ -53,6 +62,10 @@ public class ThreeFragment extends BaseFragment implements View.OnClickListener{
         content.setTypeface(fontBean.getTypeface());
         content.setTextSize(fontBean.getFontSize());
         content.setTextColor(fontBean.getFontColor());
+
+        author.setTypeface(fontBean.getTypeface());
+        author.setTextSize(fontBean.getFontSize());
+        author.setTextColor(fontBean.getFontColor());
     }
 
     @Override
@@ -60,6 +73,29 @@ public class ThreeFragment extends BaseFragment implements View.OnClickListener{
         return content;
     }
 
+
+    /**
+     * 设置自己编辑的或者网络获取的文字
+     * @param textBean
+     */
+    @Override
+    protected void setText(TextBean textBean) {
+        content.setText(textBean.getContent());
+        author.setText(textBean.getAuthor());
+    }
+
+    /**
+     * 获取已有的文字，用于填充编辑文字的对话框
+     * @return
+     */
+    @Override
+    protected TextBean getText() {
+        TextBean textBean=new TextBean();
+        textBean.setContent(content.getText().toString().trim());
+        textBean.setAuthor(author.getText().toString().trim());
+
+        return textBean;
+    }
     /**
      * 设置截屏的视图
      * @return
@@ -79,9 +115,11 @@ public class ThreeFragment extends BaseFragment implements View.OnClickListener{
         initView();
     }
     private void initView(){
-        circleImageView=(CircleImageView)findViewById(R.id.threefragment_imageview);
-        circleImageView.setOnClickListener(this);
+        squareImageView=(SquareImageView)findViewById(R.id.threefragment_imageview);
+        squareImageView.setOnClickListener(this);
 
+        author=(TextView)findViewById(R.id.threefragment_font_autor);
+        author.setOnClickListener(this);
         content=(TextView)findViewById(R.id.threefragment_font_content);
         content.setOnClickListener(this);
     }
@@ -95,35 +133,8 @@ public class ThreeFragment extends BaseFragment implements View.OnClickListener{
                 break;
             //点击了文字
             case R.id.threefragment_font_content:
-                MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                        .customView(R.layout.dialog_select_font_content)
-                        .positiveText(R.string.sure)
-                        .negativeText(R.string.cancel)
-                        .cancelable(false)
-                        .callback(new MaterialDialog.Callback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                if (TextUtils.isEmpty(dialog_content.getText().toString().trim())) {
-                                    toast("请写上装逼文字");
-                                    return;
-                                } else {
-                                    content.setText(dialog_content.getText().toString().trim());
-                                    dialog.dismiss();
-                                }
-                            }
-
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                dialog.dismiss();
-                            }
-                        }).build();
-
-                dialog_content=(EditText)dialog.getCustomView().findViewById(R.id.contentdialog_content);
-                dialog_content.setText(content.getText().toString());
-                Editable etext = dialog_content.getText();
-                Selection.setSelection(etext, etext.length());
-
-                dialog.show();
+            case R.id.threefragment_font_autor:
+                openTextSelect();
                 break;
             default:
                 break;

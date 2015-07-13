@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.content.res.TypedArray;  
 import android.graphics.BitmapShader;  
@@ -235,6 +237,28 @@ public class CircleImageView extends ImageView {
         mShaderMatrix.postTranslate((int) (dx + 0.5f) + mBorderWidth, (int) (dy + 0.5f) + mBorderWidth);  
   
         mBitmapShader.setLocalMatrix(mShaderMatrix);  
-    }  
-  
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Drawable drawable=getDrawable();
+                if(drawable!=null) {
+                    drawable.mutate().setColorFilter(Color.GRAY,
+                            PorterDuff.Mode.MULTIPLY);
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                Drawable drawableUp=getDrawable();
+                if(drawableUp!=null) {
+                    drawableUp.mutate().clearColorFilter();
+                }
+                break;
+        }
+
+        return super.onTouchEvent(event);
+    }
 }  

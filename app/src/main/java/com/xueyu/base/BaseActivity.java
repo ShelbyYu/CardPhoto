@@ -2,8 +2,10 @@ package com.xueyu.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 /**
@@ -17,6 +19,12 @@ public class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         this.context=this;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
     }
     /**
      * 显示吐司

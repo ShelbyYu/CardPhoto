@@ -1,14 +1,11 @@
 package com.xueyu.adapter;
 
-import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.xueyu.base.BaseFragment;
 import com.xueyu.bean.FontBean;
-import com.xueyu.bean.FontBeanBack;
-import com.xueyu.fragment.FourFragment;
 import com.xueyu.fragment.OneFragment;
 import com.xueyu.fragment.ThreeFragment;
 import com.xueyu.fragment.TwoFragment;

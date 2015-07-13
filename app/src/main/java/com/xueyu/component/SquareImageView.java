@@ -1,7 +1,11 @@
 package com.xueyu.component;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import com.xueyu.cardphoto.R;
@@ -30,6 +34,30 @@ public class SquareImageView extends ImageView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width=MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(width,width);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Drawable drawable=getDrawable();
+                if(drawable!=null) {
+                    drawable.mutate().setColorFilter(Color.GRAY,
+                            PorterDuff.Mode.MULTIPLY);
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                Drawable drawableUp=getDrawable();
+                if(drawableUp!=null) {
+                    drawableUp.mutate().clearColorFilter();
+                }
+                break;
+        }
+
+        return super.onTouchEvent(event);
     }
 
 }

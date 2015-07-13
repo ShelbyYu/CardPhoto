@@ -24,4 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.github.chenupt.android:springindicator:1.0.2@aar'
     compile project(':MaterialDialogLibrary')
+    compile 'com.loopj.android:android-async-http:1.4.7'
+    compile 'com.twotoasters.jazzylistview:library:1.2.1'
 }

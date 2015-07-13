@@ -12,17 +12,24 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.xueyu.bean.FontBean;
 import com.xueyu.bean.FontBeanBack;
+import com.xueyu.bean.TextBean;
 import com.xueyu.cardphoto.MainActivity;
+import com.xueyu.cardphoto.PhotoCategoryActivity;
 import com.xueyu.cardphoto.R;
+import com.xueyu.cardphoto.TextCategoryActivity;
 import com.xueyu.utils.FileUtil;
 import com.xueyu.utils.PhotoUtil;
 
@@ -64,34 +71,103 @@ public abstract  class BaseFragment extends Fragment {
         new MaterialDialog.Builder(getActivity())
                 .items(R.array.photo)
                 .cancelable(false)
-                .itemsCallback(new MaterialDialog.ListCallback(){
+                .negativeText("取消")
+                .negativeColor(context.getResources().getColor(R.color.green))
+                .itemsCallback(new MaterialDialog.ListCallback() {
 
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        switch (which){
+                        switch (which) {
                             //拍照
                             case 0:
                                 //每点击拍照，都会重新生成图片的路径
-                                takePhotoUrl=FileUtil.getMainFile()+"/"+new SimpleDateFormat("yyMMddHHmmss").format(new Date())+".jpeg";
-                                File file=new File(takePhotoUrl);
+                                takePhotoUrl = FileUtil.getMainFile() + "/" + new SimpleDateFormat("yyMMddHHmmss").format(new Date()) + ".jpeg";
+                                File file = new File(takePhotoUrl);
 
-                                Uri imageUri=Uri.fromFile(file);
-                                Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
-                                startActivityForResult(intent,REQUESTCODE_UPLOADAVATAR_CAMERA);
+                                Uri imageUri = Uri.fromFile(file);
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                startActivityForResult(intent, REQUESTCODE_UPLOADAVATAR_CAMERA);
 
                                 dialog.dismiss();
                                 break;
                             //本地相册
                             case 1:
-                                Intent intentLocal=new Intent(Intent.ACTION_PICK,null);
-                                intentLocal.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
-                                startActivityForResult(intentLocal,REQUESTCODE_UPLOADAVATAR_LOCATION);
+                                Intent intentLocal = new Intent(Intent.ACTION_PICK, null);
+                                intentLocal.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                                startActivityForResult(intentLocal, REQUESTCODE_UPLOADAVATAR_LOCATION);
                                 dialog.dismiss();
                                 break;
-                            //取消
+                            //精选
                             case 2:
+                                Intent intent1=new Intent(context, PhotoCategoryActivity.class);
+                                startActivityForResult(intent1,4);
                                 dialog.dismiss();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }).build().show();
+    }
+    /**
+     * 打开添加文字选择的对话框
+     */
+    EditText dialog_content,dialog_autor;//对话框里面的编辑框
+    public void openTextSelect(){
+        new MaterialDialog.Builder(getActivity())
+                .items(R.array.text)
+                .cancelable(false)
+                .negativeText("取消")
+                .negativeColor(context.getResources().getColor(R.color.green))
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog mainDialog, View itemView, int which, CharSequence text) {
+                        switch (which) {
+                            //自己编辑
+                            case 0:
+                                mainDialog.dismiss();
+                                MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                                        .customView(R.layout.dialog_select_font)
+                                        .positiveText(R.string.sure)
+                                        .negativeText(R.string.cancel)
+                                        .cancelable(false)
+                                        .callback(new MaterialDialog.Callback() {
+                                            @Override
+                                            public void onPositive(MaterialDialog dialog) {
+                                                if (TextUtils.isEmpty(dialog_content.getText().toString().trim())) {
+                                                    toast("请写上装逼文字");
+                                                    return;
+                                                } else {
+                                                    //可以不署名
+                                                    TextBean textBean=new TextBean();
+                                                    textBean.setContent(dialog_content.getText().toString().trim());
+                                                    textBean.setAuthor(dialog_autor.getText().toString().trim());
+                                                    setText(textBean);
+                                                    dialog.dismiss();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onNegative(MaterialDialog dialog) {
+                                                dialog.dismiss();
+                                            }
+                                        }).build();
+                                dialog_content = (EditText) dialog.getCustomView().findViewById(R.id.dialog_content);
+                                dialog_autor = (EditText) dialog.getCustomView().findViewById(R.id.dialog_autor);
+                                dialog_content.setText(getText().getContent());
+                                dialog_autor.setText(getText().getAuthor());
+                                Editable etext = dialog_content.getText();
+                                Selection.setSelection(etext, etext.length());
+
+                                dialog.show();
+
+                                break;
+                            //精选
+                            case 1:
+                                Intent intent1 = new Intent(context, TextCategoryActivity.class);
+                                startActivityForResult(intent1, 5);
+                                mainDialog.dismiss();
                                 break;
                             default:
                                 break;
@@ -102,10 +178,21 @@ public abstract  class BaseFragment extends Fragment {
 
     /**
      * 设置选中的图片
-     * @param photo
+     * @param photoUrl
      */
-    protected abstract void setPhotoBackground(Bitmap photo);
+    protected abstract void setPhotoBackground(String photoUrl);
 
+    /**
+     * 设置文字
+     * @param textBean
+     */
+    protected abstract void setText(TextBean textBean);
+
+    /**
+     * 获取文字内容
+     * @return
+     */
+    protected abstract TextBean getText();
     /**
      * 设置文字字体
      * @param fontBean
@@ -223,16 +310,35 @@ public abstract  class BaseFragment extends Fragment {
             // 裁剪头像返回
             case REQUESTCODE_UPLOADAVATAR_CROP:
                 if (resultCode==MainActivity.RESULT_OK){
-                    Bitmap bitmap= BitmapFactory.decodeFile(cardPhotoUrl);
-                    if (bitmap!=null){
-                        bitmap=PhotoUtil.compressImage(bitmap);
-                        if (isFromCamera && degree != 0) {
-                            bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
-                        }
-                        setPhotoBackground(bitmap);
-                    }
+//                    Bitmap bitmap= BitmapFactory.decodeFile(cardPhotoUrl);
+//                    if (bitmap!=null){
+//                        bitmap=PhotoUtil.compressImage(bitmap);
+//                        if (isFromCamera && degree != 0) {
+//                            bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
+//                        }
+//                        setPhotoBackground(bitmap);
+//                    }
+                    setPhotoBackground(cardPhotoUrl);
                 }else {
                     toast("取消了选择");
+                }
+                break;
+            //联网获取图片返回
+            case 4:
+                if (resultCode==MainActivity.RESULT_OK&& data!=null){
+                    Bundle bundle=data.getExtras();
+                    String url=bundle.getString("photoUrl");
+                    if (!TextUtils.isEmpty(url)){
+                        setPhotoBackground(url);
+                    }
+                }
+                break;
+            //联网获取文字返回
+            case 5:
+                if (resultCode==MainActivity.RESULT_OK&& data!=null){
+                    Bundle bundle=data.getExtras();
+                    TextBean textBean=(TextBean)bundle.getSerializable("textBean");
+                    setText(textBean);
                 }
                 break;
             default:

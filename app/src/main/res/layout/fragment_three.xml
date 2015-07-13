@@ -14,22 +14,44 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@color/white">
-            <com.xueyu.component.CircleImageView
+            <com.xueyu.component.SquareImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
-                android:background="@mipmap/icon_template"
+                android:src="@mipmap/icon_template"
                 android:id="@+id/threefragment_imageview" />
-            <TextView
-                android:id="@+id/threefragment_font_content"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/twofragment_cardphotoview"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="请添加文字"
-                android:textColor="@color/font_color"
-                android:textSize="@dimen/font_size"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:layout_alignParentBottom="false" />
+                android:layout_margin="10dp"
+                android:layout_centerInParent="true">
+                <TextView
+                    android:id="@+id/threefragment_font_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请添加文字"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="@color/font_color"
+                    android:textSize="@dimen/font_size"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_alignParentBottom="false" />
+                <TextView
+                    android:id="@+id/threefragment_font_autor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="－－署名"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="30dp"
+                    android:textColor="@color/font_color"
+                    android:textSize="@dimen/font_size"
+                    android:layout_marginBottom="15dp"/>
+            </LinearLayout>
+
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

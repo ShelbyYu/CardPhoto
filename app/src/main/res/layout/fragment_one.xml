@@ -21,17 +21,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:scaleType="centerInside"
-                android:background="@mipmap/icon_template"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/icon_template"
                 android:id="@+id/onefragment_imageview" />
             <TextView
                 android:id="@+id/onefragment_font_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lineSpacingExtra="3dp"
                 android:text="请添加文字"
                 android:textColor="@color/font_color"
                 android:textSize="@dimen/font_size"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"/>
             <TextView
                 android:id="@+id/onefragment_font_autor"
                 android:layout_width="wrap_content"

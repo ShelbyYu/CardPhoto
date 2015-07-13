@@ -1,7 +1,5 @@
 package com.xueyu.fragment;
 
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,11 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.xueyu.base.BaseFragment;
 import com.xueyu.bean.FontBean;
+import com.xueyu.bean.TextBean;
 import com.xueyu.cardphoto.R;
 import com.xueyu.component.SquareImageView;
 
@@ -36,14 +35,42 @@ public class OneFragment extends BaseFragment implements View.OnClickListener{
 
     /**
      * 设置选中的图片
-     * @param photo
+     * @param photoUrl
      */
     @Override
-    protected void setPhotoBackground(Bitmap photo) {
-        Drawable drawable =new BitmapDrawable(photo);
-        squareImageView.setBackgroundDrawable(drawable);
-        drawable=null;
-        System.gc();
+    protected void setPhotoBackground(String  photoUrl) {
+//        Drawable drawable =new BitmapDrawable(photo);
+//        squareImageView.setBackgroundDrawable(drawable);
+//        drawable=null;
+
+        if(!photoUrl.contains("http://")){
+            photoUrl = ImageDownloader.Scheme.FILE.wrap(photoUrl);
+        }
+
+        ImageLoader.getInstance().displayImage(photoUrl,squareImageView);
+    }
+
+    /**
+     * 设置自己编辑的或者网络获取的文字
+     * @param textBean
+     */
+    @Override
+    protected void setText(TextBean textBean) {
+        content.setText(textBean.getContent());
+        autor.setText(textBean.getAuthor());
+    }
+
+    /**
+     * 获取已有的文字，用于填充编辑文字的对话框
+     * @return
+     */
+    @Override
+    protected TextBean getText() {
+        TextBean textBean=new TextBean();
+        textBean.setContent(content.getText().toString().trim());
+        textBean.setAuthor(autor.getText().toString().trim());
+
+        return textBean;
     }
 
     /**
@@ -97,8 +124,6 @@ public class OneFragment extends BaseFragment implements View.OnClickListener{
         content.setOnClickListener(this);
 
     }
-
-    EditText dialog_content,dialog_autor;//对话框里面的编辑框
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -108,43 +133,7 @@ public class OneFragment extends BaseFragment implements View.OnClickListener{
             //点击了文字
             case R.id.onefragment_font_content:
             case R.id.onefragment_font_autor:
-                MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                .customView(R.layout.dialog_select_font)
-                .positiveText(R.string.sure)
-                .negativeText(R.string.cancel)
-                .cancelable(false)
-                .callback(new MaterialDialog.Callback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        if (TextUtils.isEmpty(dialog_content.getText().toString().trim())) {
-                            toast("请写上装逼文字");
-                            return;
-                        } else {
-                            if (TextUtils.isEmpty(dialog_autor.getText().toString().trim())) {
-                                toast("请署名");
-                                return;
-                            } else {
-                                content.setText(dialog_content.getText().toString().trim());
-                                autor.setText(dialog_autor.getText().toString().trim());
-                                dialog.dismiss();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        dialog.dismiss();
-                    }
-                }).build();
-
-                dialog_content=(EditText)dialog.getCustomView().findViewById(R.id.dialog_content);
-                dialog_autor=(EditText)dialog.getCustomView().findViewById(R.id.dialog_autor);
-                dialog_content.setText(content.getText().toString());
-                dialog_autor.setText(autor.getText().toString());
-                Editable etext = dialog_content.getText();
-                Selection.setSelection(etext, etext.length());
-
-                dialog.show();
+                openTextSelect();
                 break;
             default:
                 break;

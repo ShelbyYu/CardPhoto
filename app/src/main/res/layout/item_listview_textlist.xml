@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp">
+    <LinearLayout
+        android:id="@+id/onefragment_photoview"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_textlist_item">
+        <TextView
+            android:id="@+id/item_textlist_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="3dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="5dp"
+            android:text="请添加文字"
+            android:textColor="@color/font_color"
+            android:textSize="@dimen/font_size"/>
+        <TextView
+            android:id="@+id/item_textlist_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="－－署名"
+            android:textColor="@color/font_color"
+            android:textSize="@dimen/font_size"
+            android:layout_gravity="end"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"/>
+    </LinearLayout>
+</LinearLayout>

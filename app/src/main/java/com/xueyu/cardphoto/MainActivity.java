@@ -4,15 +4,24 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.GridView;
 import android.widget.TextView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 import com.xueyu.adapter.FragmentAdapter;
 import com.xueyu.base.BaseActivity;
 import com.xueyu.bean.FontBean;
 import com.xueyu.bean.FontBeanBack;
 
+import org.apache.http.Header;
+
 import java.io.File;
+
 import github.chenupt.springindicator.SpringIndicator;
 import github.chenupt.springindicator.viewpager.ScrollerViewPager;
 
@@ -23,6 +32,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     FragmentAdapter fragmentAdapter;
 
     private TextView share,font,save;
+
+    AsyncHttpClient client=new AsyncHttpClient();
 
     public static Typeface currentTypeFace=Typeface.DEFAULT;//唉，没办法，谁叫它不是序列化的呢，传递不了啊
     @Override
@@ -35,6 +46,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fragmentAdapter=new FragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentAdapter);
         springIndicator.setViewPager(viewPager);
+
+    }
+
+    private void post(){
+        RequestParams params=new RequestParams();
+        params.put("f_id","10");
+        params.put("orderBy","latest");
+        params.put("curPage","1");
+        params.put("pageLen","30");
+        client.post("http://zero.myname9.com/index.php/app/pic/getList", params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.e("数据2：",responseString);
+            }
+        });
     }
 
     /**

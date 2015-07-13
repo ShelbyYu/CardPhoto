@@ -6,18 +6,21 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.xueyu.cardphoto.R;
 
-public class ColorSelector extends android.app.Dialog implements Slider.OnValueChangedListener {
+public class ColorSelector extends android.app.Dialog implements Slider.OnValueChangedListener,View.OnClickListener {
 	
 	int color = Color.BLACK;
+
 	View colorView;
+
+	boolean isCancel=false;
 	
 	OnColorSelectedListener onColorSelectedListener;
 	Slider red, green, blue;
-	
 
 	public ColorSelector(Context context,Integer color, OnColorSelectedListener onColorSelectedListener) {
 		super(context, android.R.style.Theme_Translucent);
@@ -29,8 +32,11 @@ public class ColorSelector extends android.app.Dialog implements Slider.OnValueC
 			
 			@Override
 			public void onDismiss(DialogInterface dialog) {
-				if(ColorSelector.this.onColorSelectedListener != null)
+				if (isCancel) return;
+
+				if(ColorSelector.this.onColorSelectedListener != null) {
 					ColorSelector.this.onColorSelectedListener.onColorSelected(ColorSelector.this.color);
+				}
 			}
 		});
 		
@@ -44,16 +50,22 @@ public class ColorSelector extends android.app.Dialog implements Slider.OnValueC
 	    
 	    colorView = findViewById(R.id.viewColor);
 	    colorView.setBackgroundColor(color);
+
+
+		findViewById(R.id.colorDialog_cancel).setOnClickListener(this);
+		findViewById(R.id.colorDialog_sure).setOnClickListener(this);
+
+
 	    // Resize ColorView
-	    colorView.post(new Runnable() {
-			
-			@Override
-			public void run() {
-				LayoutParams params = (LayoutParams) colorView.getLayoutParams();
-				params.height = colorView.getWidth();
-				colorView.setLayoutParams(params);
-			}
-		});
+//	    colorView.post(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				LayoutParams params = (LayoutParams) colorView.getLayoutParams();
+//				params.height = colorView.getWidth();
+//				colorView.setLayoutParams(params);
+//			}
+//		});
 	    
 	    
 	    // Configure Sliders
@@ -79,8 +91,17 @@ public class ColorSelector extends android.app.Dialog implements Slider.OnValueC
 		color = Color.rgb(red.getValue(), green.getValue(), blue.getValue());
 		colorView.setBackgroundColor(color);
 	}
-	
-	
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()){
+			case R.id.colorDialog_cancel:
+				isCancel=true;
+				break;
+		}
+		this.dismiss();
+	}
+
 	// Event that execute when color selector is closed
 		public interface OnColorSelectedListener{
 			public void onColorSelected(int color);
